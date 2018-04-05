@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Fly to a location based on scroll position</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .intro {
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <style>
+        #map {
+            position: fixed;
+            width: 50%;
+        }
+        
+        #features {
+            width: 50%;
+            margin-left: 50%;
+            font-family: sans-serif;
+            overflow-y: scroll;
+            background-color: white;
+        }
+        
+        section {
+            padding: 25px 50px;
+            line-height: 25px;
+            border-bottom: 1px solid #22b9de;
+            opacity: 0.25;
+            font-size: 13px;
+            color: #18323b;
+        }
+        
+        section.active {
+            opacity: 1;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 200px;
+        }
+    </style>
+
+    <div id='map'></div>
+    <div id='features'>
+
+        <div class="intro">
+            <h1>THE SECRET LIFE OF WALTER MITTY</h1>
+
+            <p>På denne hjemmeside kan du opleve udvalgte lokationer fra filmen "The Secret Life Of Walter Mitty" på Island. Hertil vil der være små facts omkring hver lokation.</p>
+
+        </div>
+
+        <section id='baker' class='active'>
+            <h3>Garður</h3>
+            <p>Garður er en fiskerby nær Keflaviks internationale lufthavn. Er er der mulighed for at se Islands ældste fyrtårn – Garðaskagi og tusindvis af havfugle fra Grønland og nord Amerika. </p>
+            <img src="1.jpg" alt="Garður" width="50%">
+
+        </section>
+        <section id='aldgate'>
+            <h3>Stykkishólmur</h3>
+            <p>Stykkishólmur er hovedstaden af kendte Snæfellsnes Peninsula. Stykkishólmur er en lille smuk fiskerby hvor man kan se en masse ældre bygninger. </p>
+
+            <img src="2.jpg" alt="Stykkishólmur" width="50%">
+        </section>
+
+        <section id='london-bridge'>
+            <h3>Grundarfjörður</h3>
+            <p>Grundarfjörður er en fikserby tæt på det meget populære bjerg Kirkjufell. Denne lokation er specielt populær for fotografer, da dette område er ekstraordinært smukt. Grundarfjörður er lokaliseret 40 km. fra Stykkishólmur.</p>
+
+            <img src="3.jpg" alt="Grundarfjörður" width="50%">
+
+        </section>
+        <section id='woolwich'>
+            <h3>Hveradalir</h3>
+            <p>Hveradalir er et Geotermisk område nær kendte Hveravellir og bjerget Kerlingafjöll. </p>
+
+            <img src="4.jpg" alt="Hveradalir" width="50%">
+        </section>
+        <section id='gloucester'>
+            <h3>Fjallsárlón</h3>
+            <p>Fjallsárlón er et Gletsjer område i syd Island. Området er ikke særlig stort, men meget smukt. </p>
+
+            <img src="5.jpg" alt="Fjallsárlón" width="50%">
+        </section>
+        <section id='caulfield-gardens'>
+            <h3>Kalfafellsdalur</h3>
+            <p>Kalfafellsdalur er en dal mellem Jökulsárlón og byen Höfn.</p>
+            <img src="6.jpg" alt="Kalfafellsdalur" width="50%">
+        </section>
+        <section id='telegraph'>
+            <h3>Höfn</h3>
+            <p>Höfn er en fiskerby i smukke Hornafjörður havn, hvor du kan se en naturskøn udsigt udover Vatnajökull gletsjer.</p>
+            <img src="7.jpg" alt="Höfn" width="50%">
+        </section>
+        <section id='charing-cross'>
+            <h3>Seyðisfjörður</h3>
+            <p>Seyðisfjörður er en lille by lokaliseret i en smuk fjord med samme navn som Seyðisfjörður. Hver uge sejler der en færge fra Danmark og her til.</p>
+
+            <img src="8.jpg" alt="Seyðisfjörður" width="50%">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+        </section>
+
+
+    </div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiY2hyaXNuZWRlcmdhYXJkIiwiYSI6ImNqZmpkMjRudjUzbzgzM3BuNDl2cHV6OXQifQ.JYpWaJPyzQU4b1BXkRdMGA';
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/chrisnedergaard/cjfl417gwh6on2rlhu29okmna',
+            center: [-19.0212, 64.9313],
+            zoom: 5.5,
+            bearing: 27,
+            pitch: 45
+        });
+
+        var chapters = {
+            'baker': {
+                bearing: 27,
+                center: [-22.638094, 64.064708],
+                zoom: 8,
+                pitch: 20
+            },
+            'aldgate': {
+                duration: 6000,
+                center: [-22.735941, 65.066902],
+                bearing: 150,
+                zoom: 8,
+                pitch: 0
+            },
+            'london-bridge': {
+                bearing: 90,
+                center: [-23.260406, 64.924669],
+                zoom: 8,
+                speed: 0.6,
+                pitch: 40
+            },
+            'woolwich': {
+                bearing: 90,
+                center: [-19.283333, 64.633333],
+                zoom: 8
+            },
+            'gloucester': {
+                bearing: 45,
+                center: [-16.385, 64.018611],
+                zoom: 8,
+                pitch: 20,
+                speed: 0.5
+            },
+            'caulfield-gardens': {
+                bearing: 180,
+                center: [-16.030278, 64.220556],
+                zoom: 8
+            },
+            'telegraph': {
+                bearing: 90,
+                center: [-15.20759, 64.255959],
+                zoom: 8,
+                pitch: 40
+            },
+            'charing-cross': {
+                bearing: 90,
+                center: [-14.001169, 65.260727],
+                zoom: 8,
+                pitch: 20
+            }
+        };
+
+        // On every scroll event, check which element is on screen
+        window.onscroll = function() {
+            var chapterNames = Object.keys(chapters);
+            for (var i = 0; i < chapterNames.length; i++) {
+                var chapterName = chapterNames[i];
+                if (isElementOnScreen(chapterName)) {
+                    setActiveChapter(chapterName);
+                    break;
+                }
+            }
+        };
+
+        var activeChapterName = 'baker';
+
+        function setActiveChapter(chapterName) {
+            if (chapterName === activeChapterName) return;
+
+            map.flyTo(chapters[chapterName]);
+
+            document.getElementById(chapterName).setAttribute('class', 'active');
+            document.getElementById(activeChapterName).setAttribute('class', '');
+
+            activeChapterName = chapterName;
+        }
+
+        function isElementOnScreen(id) {
+            var element = document.getElementById(id);
+            var bounds = element.getBoundingClientRect();
+            return bounds.top < window.innerHeight && bounds.bottom > 0;
+        }
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-22.638094, 64.064708])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-22.735941, 65.066902])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-23.260406, 64.924669])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-19.283333, 64.633333])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-16.385, 64.018611])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-16.030278, 64.220556])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-15.20759, 64.255959])
+            .addTo(map);
+
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-14.001169, 65.260727])
+            .addTo(map);
+    </script>
+
+</body>
+</html>
